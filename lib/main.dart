@@ -28,28 +28,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       onGenerateRoute: (settings) => generateRoute(settings),
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text("Amazon"),
-          backgroundColor: Colors.lightBlue,
-          ),
-        body:  Center(
-          child: Column(
-            children: [
-               const Text(
-                'Flutter Demo Home Page'),
-                Builder(
-                  builder: (context) {
-                    return ElevatedButton(onPressed: (){
-
-                      Navigator.pushNamed(context, AuthScreen.routeName);
-                    }, child: const Text("data"));
-                  }
-                ),
-            ],
-          ),
-        )
-          ),
+      home: const AuthScreen()
     );
   }
 }
