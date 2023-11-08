@@ -54,6 +54,7 @@ class _AuthScreenState extends State<AuthScreen> {
                 
                 ),
                 ListTile(
+                  tileColor: _auth == Auth.signup ? GlobalVariable.backgroundColor : GlobalVariable.greyBackgroundCOlor,
                   title:  const Text("Create Account", 
                   style: TextStyle(
                     fontWeight: FontWeight.bold
@@ -121,6 +122,34 @@ class _AuthScreenState extends State<AuthScreen> {
 
                  }),
 
+                ),
+
+                if(_auth == Auth.signin)
+                Container(
+                  padding: const EdgeInsets.all(8.0),
+                  color: GlobalVariable.backgroundColor,
+                  child: Form(
+                    key: _signUpFormKey,
+                    child: Column(
+                      children: [
+                        
+                        CustomTextField(controller: _emailController,
+                        hintText: "Email",
+                        ),
+                        const SizedBox(
+                          height: 8.0,
+                        ),
+                        CustomTextField(controller: _passwordController,
+                        hintText: "Password",
+                        ),
+                        const SizedBox(
+                          height: 8.0,
+                        ),
+                        CustomButton(text: "Sign In", onTap: (){})
+                      ],
+                    ),
+                
+                    ),
                 ),
 
               ]),
