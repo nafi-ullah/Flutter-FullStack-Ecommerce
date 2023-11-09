@@ -1,17 +1,29 @@
+console.log("Hello world");
 
-const express = require("express"); // similar to import 'package:express/express.dart';
-const authRouter = require("./routes/auth"); // import from other file
+const express = require("express");
+const mongoose = require("mongoose"); // just like import 'package:flutter/ packages';
+
 
 const PORT = 3000;
-const app= express();
+const app = express(); //create express app for creating server
+const DB = "mongodb+srv://nafiullah:SWEswe123@cluster0.p1hgigm.mongodb.net/?retryWrites=true&w=majority";
 
-//middleware // additionally it connect
-app.use(authRouter);
-//client ->middle-wire -> server -> client
+const authRouter = require('./routes/auth'); // import other file in main file to run project
+
+//middleware
+app.use(authRouter); // by this as auth.js export the code, here after recieve via authRouter varible, using via app.use
 
 
-app.listen(PORT, ()=> {   //for connection of local host.
-    console.log(`connected at port ${PORT} ` );
+//Database connection:
+
+mongoose.connect(DB).then(()=>{
+    console.log("Connection Successful");
+}).catch((e)=>{
+    console.log(e);
 });
 
+//running in surver
+app.listen(PORT,()=>{
+    console.log(`Connected to my server ${PORT}`);
+});
 
