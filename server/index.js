@@ -23,7 +23,7 @@ mongoose.connect(DB).then(()=>{
 });
 
 //running in surver
-app.listen(PORT,()=>{
+app.listen(PORT,"0.0.0.0",()=>{
     console.log(`Connected to my server ${PORT}`);
 });
 
