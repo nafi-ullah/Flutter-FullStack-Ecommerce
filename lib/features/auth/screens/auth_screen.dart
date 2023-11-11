@@ -39,14 +39,20 @@ class _AuthScreenState extends State<AuthScreen> {
   }
 
   void signUpUser(){
-    print("sign up function executed");
+   
         authService.signUpUser(context: context, 
       email: _emailController.text, 
       password: _passwordController.text,
        name: _nameController.text);
-     
-
       
+  }
+
+  void signInUser(){
+    
+        authService.signInUser(context: context, 
+      email: _emailController.text, 
+      password: _passwordController.text,
+      ); 
   }
 
   @override
@@ -111,15 +117,9 @@ class _AuthScreenState extends State<AuthScreen> {
                           height: 8.0,
                         ),
                         CustomButton(text: "Sign Up", onTap: (){
-                              
-                        
-                          setState(() {
                             if(_signUpFormKey.currentState!.validate()){
-                              
                             signUpUser();
-                            }
-                          });
-
+                            }                    
                         })
                       ],
                     ),
@@ -152,7 +152,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   padding: const EdgeInsets.all(8.0),
                   color: GlobalVariable.backgroundColor,
                   child: Form(
-                    key: _signUpFormKey,
+                    key: _signInFormKey,
                     child: Column(
                       children: [
                         
@@ -168,7 +168,13 @@ class _AuthScreenState extends State<AuthScreen> {
                         const SizedBox(
                           height: 8.0,
                         ),
-                        CustomButton(text: "Sign In", onTap: (){})
+                        CustomButton(text: "Sign In", onTap: (){
+
+                          if(_signInFormKey.currentState!.validate()){
+                              
+                            signInUser();
+                            }
+                        })
                       ],
                     ),
                 
