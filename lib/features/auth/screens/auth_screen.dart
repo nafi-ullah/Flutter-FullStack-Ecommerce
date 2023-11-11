@@ -112,16 +112,11 @@ class _AuthScreenState extends State<AuthScreen> {
                         ),
                         CustomButton(text: "Sign Up", onTap: (){
                               
-                          print(_passwordController);
-                              print(_emailController);
-                              print(_nameController);
+                        
                           setState(() {
-
-                            
                             if(_signUpFormKey.currentState!.validate()){
                               
                             signUpUser();
-                            print("i am rich");
                             }
                           });
 

@@ -30,8 +30,8 @@ void signUpUser({
         'Content-Type' : 'application/json; charset=UTF-8'
       }
       );
-      print(res.statusCode);
-      print(res.body);
+     
+     
 
       httpErrorHandle(
         response: res, 
@@ -41,7 +41,7 @@ void signUpUser({
          }
          );
          
-        print("auth service done.");
+      
   }catch(e){
     print(e.toString());
         showSnackBar(context, e.toString());
