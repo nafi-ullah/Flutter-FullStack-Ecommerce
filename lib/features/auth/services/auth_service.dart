@@ -2,10 +2,15 @@ import 'dart:convert';
 
 import 'package:amazon_clone_app/constants/error_handling.dart';
 import 'package:amazon_clone_app/constants/utils.dart';
+import 'package:amazon_clone_app/features/home/screens/home_screen.dart';
+import 'package:amazon_clone_app/provicder/user_provider.dart';
+import 'package:amazon_clone_app/router.dart';
 import 'package:flutter/material.dart';
 import 'package:amazon_clone_app/models/user.dart';
 import 'package:amazon_clone_app/constants/global_variable.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService{
 //sign up user
@@ -69,12 +74,25 @@ void signInUser({
       );
      
      
-      print(res.body);
+//      print(res.body);
       httpErrorHandle(
         response: res, 
         context: context,
-         onSuccess: (){
-          //showSnackBar(context, 'Account create! Log in with same email and password');
+         onSuccess: () async {
+            // log in er por token store kore rakhbo jeno barbar log in krte na hoy
+
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          
+          Provider.of<UserProvider>(context, listen: false).setUser(res.body);
+          await prefs.setString('x-auth-token', jsonDecode(res.body)['token']);
+          Navigator.pushAndRemoveUntil(
+            context, 
+            generateRoute(RouteSettings(name: HomeScreen.routeName)),
+            //MaterialPageRoute(builder: (context) => HomeScreen()), same as above
+            (route) => false)
+            ;
+
+
          }
          );
          
