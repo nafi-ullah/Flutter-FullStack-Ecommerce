@@ -91,12 +91,57 @@ void signInUser({
             //MaterialPageRoute(builder: (context) => HomeScreen()), same as above
             (route) => false)
             ;
-
-
          }
-         );
-         
+         );   
+  }catch(e){
+    print(e.toString());
+        showSnackBar(context, e.toString());
+  }
+}
+
+// Get user data
+void getUserData({
+    required BuildContext context,
+}) async {
+  try{
       
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? token = prefs.getString('x-auth-token');
+
+      if(token == null){
+        prefs.setString( 'x-auth-token','');
+      }
+     
+     var tokenRes =  await http.post(Uri.parse('$uri/tokenIsValid'),
+      headers: <String, String> {
+        'Content-Type' : 'application/json; charset=UTF-8',
+        'x-auth-token': token!
+      }
+     
+     );
+
+     var  response = jsonDecode(tokenRes.body);
+
+     if(response == true){
+        // get user data
+     }
+      // httpErrorHandle(
+      //   response: res, 
+      //   context: context,
+      //    onSuccess: () async {
+      //       // log in er por token store kore rakhbo jeno barbar log in krte na hoy
+
+      //     SharedPreferences prefs = await SharedPreferences.getInstance();
+          
+      //     Provider.of<UserProvider>(context, listen: false).setUser(res.body);
+      //     await prefs.setString('x-auth-token', jsonDecode(res.body)['token']);
+      //     Navigator.pushAndRemoveUntil(
+      //       context, 
+      //       generateRoute(RouteSettings(name: HomeScreen.routeName)),
+      //       //MaterialPageRoute(builder: (context) => HomeScreen()), same as above
+      //       (route) => false);
+      //    }
+      //    );   
   }catch(e){
     print(e.toString());
         showSnackBar(context, e.toString());

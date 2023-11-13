@@ -1,5 +1,6 @@
 import 'package:amazon_clone_app/constants/global_variable.dart';
 import 'package:amazon_clone_app/features/auth/screens/auth_screen.dart';
+import 'package:amazon_clone_app/features/auth/services/auth_service.dart';
 import 'package:amazon_clone_app/provicder/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:amazon_clone_app/router.dart';
@@ -12,10 +13,22 @@ void main() {
   child: const MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final AuthService authService = AuthService();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+  
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
