@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:amazon_clone_app/common/widgets/bottom_bar.dart';
 import 'package:amazon_clone_app/constants/error_handling.dart';
 import 'package:amazon_clone_app/constants/utils.dart';
 import 'package:amazon_clone_app/features/home/screens/home_screen.dart';
@@ -94,7 +95,7 @@ void signInUser({
           await prefs.setString('x-auth-token', jsonDecode(res.body)['token']); //shared preference a jst token ta thakbe
           Navigator.pushAndRemoveUntil(
             context, 
-            generateRoute(RouteSettings(name: HomeScreen.routeName)),
+            generateRoute(RouteSettings(name: BottomBar.routeName)),
             //MaterialPageRoute(builder: (context) => HomeScreen()), same as above
             (route) => false)
             ;
@@ -143,11 +144,10 @@ void getUserData({
 
       var userProvider = Provider.of<UserProvider>(context, listen: false);
       userProvider.setUser(userRes.body);
-      print(userRes.statusCode);
-      print(userRes.body);
+      
      }
   }catch(e){
-    print(e.toString());
+  
         showSnackBar(context, e.toString());
   }
 }
