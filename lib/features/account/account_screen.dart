@@ -1,3 +1,4 @@
+import 'package:amazon_clone_app/features/account/acocount_widgets/below_app.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants/global_variable.dart';
@@ -23,7 +24,7 @@ class AccountScreen extends StatelessWidget {
                  alignment: Alignment.topLeft,
                       child: Image.asset(
                      'assets/images/autnexlogo.png',
-                height: 45,
+                height: 30,
 
     ),
     ),
@@ -45,8 +46,10 @@ class AccountScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: Center(
-          child: Text('Hey'),
+      body: const Column(
+        children: [
+          BelowAppBar()
+        ],
 
     )
     );

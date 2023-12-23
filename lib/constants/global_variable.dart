@@ -6,8 +6,8 @@ class GlobalVariable{
 
   static const appBarGradient = LinearGradient(
     colors: [
-      Color.fromRGBO(169, 179, 136, 0.603),
-      Color.fromRGBO(169, 179, 136, 1)
+      Color.fromRGBO(169, 179, 136, 1),
+      Color.fromRGBO(169, 179, 136, 0.918)
     ],
     stops: [0.5, 1.0],
   );
