@@ -34,9 +34,14 @@ void signUpUser({
       http.Response res=  await http.post(Uri.parse('$uri/api/signup'),
       body: user.toJson(),
       headers: <String, String>{
-        'Content-Type' : 'application/json; charset=UTF-8'
+        'Content-Type' : 'application/json; charset=UTF-8',
+         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
+  "Access-Control-Allow-Credentials": "true", // Required for cookies, authorization headers with HTTPS
+  "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
+  "Access-Control-Allow-Methods": "POST, OPTIONS"
       }
       );
+      print(res.body);
      
      
 
@@ -62,14 +67,15 @@ void signInUser({
 }) async {
   try{
       
-
       http.Response res=  await http.post(Uri.parse('$uri/api/signin'),
       body: jsonEncode({
         'email': email,
         'password': password
       }),
       headers: <String, String>{
-        'Content-Type' : 'application/json; charset=UTF-8'
+        "Access-Control-Allow-Origin": "*",
+        'Content-Type' : 'application/json; charset=UTF-8',
+        'Accept': '*/*'
       }
       );
      
@@ -79,12 +85,13 @@ void signInUser({
         response: res, 
         context: context,
          onSuccess: () async {
+          
             // log in er por token store kore rakhbo jeno barbar log in krte na hoy
 
           SharedPreferences prefs = await SharedPreferences.getInstance();
           
           Provider.of<UserProvider>(context, listen: false).setUser(res.body);
-          await prefs.setString('x-auth-token', jsonDecode(res.body)['token']);
+          await prefs.setString('x-auth-token', jsonDecode(res.body)['token']); //shared preference a jst token ta thakbe
           Navigator.pushAndRemoveUntil(
             context, 
             generateRoute(RouteSettings(name: HomeScreen.routeName)),
@@ -99,7 +106,7 @@ void signInUser({
   }
 }
 
-// Get user data
+// Get user data , the user data wont reveal untill token verification
 void getUserData({
     required BuildContext context,
 }) async {
@@ -111,8 +118,9 @@ void getUserData({
       if(token == null){
         prefs.setString( 'x-auth-token','');
       }
-     
-     var tokenRes =  await http.post(Uri.parse('$uri/tokenIsValid'),
+     // token jeta pabo seta valid ki na, ber korte hobe. 
+     var tokenRes =  await http.post(
+      Uri.parse('$uri/tokenIsValid'),
       headers: <String, String> {
         'Content-Type' : 'application/json; charset=UTF-8',
         'x-auth-token': token!
@@ -124,24 +132,20 @@ void getUserData({
 
      if(response == true){
         // get user data
-     }
-      // httpErrorHandle(
-      //   response: res, 
-      //   context: context,
-      //    onSuccess: () async {
-      //       // log in er por token store kore rakhbo jeno barbar log in krte na hoy
+        http.Response userRes = await http.get(
+          Uri.parse('$uri/'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'x-auth-token': token,
+          }
+        );
+     
 
-      //     SharedPreferences prefs = await SharedPreferences.getInstance();
-          
-      //     Provider.of<UserProvider>(context, listen: false).setUser(res.body);
-      //     await prefs.setString('x-auth-token', jsonDecode(res.body)['token']);
-      //     Navigator.pushAndRemoveUntil(
-      //       context, 
-      //       generateRoute(RouteSettings(name: HomeScreen.routeName)),
-      //       //MaterialPageRoute(builder: (context) => HomeScreen()), same as above
-      //       (route) => false);
-      //    }
-      //    );   
+      var userProvider = Provider.of<UserProvider>(context, listen: false);
+      userProvider.setUser(userRes.body);
+      print(userRes.statusCode);
+      print(userRes.body);
+     }
   }catch(e){
     print(e.toString());
         showSnackBar(context, e.toString());

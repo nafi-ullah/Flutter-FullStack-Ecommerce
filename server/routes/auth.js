@@ -2,6 +2,7 @@ const express = require("express");
 const User= require("../models/user");
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const auth = require("../middlewares/authm");
 
 const authRouter = express.Router();
 
@@ -90,6 +91,7 @@ authRouter.post("/tokenIsValid", async(req,res)=>{
       if(!token) return res.json(false);
 
       const verified= jwt.verify(token, 'passwordKey');
+   
         if(!verified) return res.json(false);
 
     const userexist = await User.findById(verified.id);
@@ -102,8 +104,18 @@ authRouter.post("/tokenIsValid", async(req,res)=>{
 });
 
 // get user data
+authRouter.get('/', auth, async (req, res)=> { //auth= this is the middleware that we neet to create
+  try{
+    const user = await User.findById(req.user);
+   
+    res.json({...user._doc, token: req.token});
+    
+  }catch(err){
+    res.status(500).json({error: err.message}); 
+  }
 
-authRouterget()
+})
 
 
-module.exports = authRouter;
+
+module.exports = authRouter; // authrouter private obostahy ase, eta publicly export korte hobe.

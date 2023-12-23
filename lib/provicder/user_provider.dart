@@ -12,9 +12,10 @@ class UserProvider extends ChangeNotifier{
         token: ''
       );
 
-    User get user => _user;
+    User get user => _user; // karon eta private variable
 
-    void setUser(String user){
+    void setUser(String user){   // provider a save hoise log in data 
+                      // Provider.of<UserProvider>(context, listen: false).setUser(res.body);
       _user = User.fromJson(user);
       notifyListeners();
     }

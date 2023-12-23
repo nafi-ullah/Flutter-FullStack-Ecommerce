@@ -17,7 +17,7 @@ app.use(authRouter); // by this as auth.js export the code, here after recieve v
 //Database connection:
 
 mongoose.connect(DB).then(()=>{
-    console.log("Connection Successful");
+    console.log("Database Connection Successful");
 }).catch((e)=>{
     console.log(e);
 });

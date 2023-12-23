@@ -1,6 +1,7 @@
 import 'package:amazon_clone_app/constants/global_variable.dart';
 import 'package:amazon_clone_app/features/auth/screens/auth_screen.dart';
 import 'package:amazon_clone_app/features/auth/services/auth_service.dart';
+import 'package:amazon_clone_app/features/home/screens/home_screen.dart';
 import 'package:amazon_clone_app/provicder/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:amazon_clone_app/router.dart';
@@ -26,6 +27,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    authService.getUserData(context: context);
   }
   
 
@@ -46,7 +48,9 @@ class _MyAppState extends State<MyApp> {
         useMaterial3: true,
       ),
       onGenerateRoute: (settings) => generateRoute(settings),
-      home: const AuthScreen()
+      home: Provider.of<UserProvider>(context).user.token.isNotEmpty 
+      ? const HomeScreen() : 
+      const AuthScreen()
     );
   }
 }

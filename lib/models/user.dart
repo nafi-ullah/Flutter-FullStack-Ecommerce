@@ -18,7 +18,7 @@ class User{
     required this.type, 
     required this.token});
 
-
+// json serialization (parameter gula select kore bulb icon a click korar por option ashbe)
     Map<String,dynamic> toMap(){
       return{
           'id': id,

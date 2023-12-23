@@ -17,9 +17,14 @@ class AuthScreen extends StatefulWidget {
   @override
   State<AuthScreen> createState() => _AuthScreenState();
 }
+/*
+Form thakbe ==> text controller and global key(need for form button).
+# textcontroller gula dispose korte hoy
+
+ */
 
 class _AuthScreenState extends State<AuthScreen> {
-  Auth _auth = Auth.signup;
+  Auth _auth = Auth.signup; // enum er maddhobe 0,1 type flag or string check lage na.
   final _signUpFormKey = GlobalKey<FormState>();
   final _signInFormKey = GlobalKey<FormState>();
 
@@ -40,7 +45,7 @@ class _AuthScreenState extends State<AuthScreen> {
 
   void signUpUser(){
    
-        authService.signUpUser(context: context, 
+        authService.signUpUser(context: context, // stateful widget a thakay auto setar context dhore nise
       email: _emailController.text, 
       password: _passwordController.text,
        name: _nameController.text);
@@ -59,7 +64,7 @@ class _AuthScreenState extends State<AuthScreen> {
   Widget build(BuildContext context) {
     return  Scaffold(
       backgroundColor: GlobalVariable.greyBackgroundCOlor,
-        body:SafeArea(
+        body:SafeArea(  // uporer charge , time percenage bartar nicher area te thakbe.
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
@@ -117,7 +122,7 @@ class _AuthScreenState extends State<AuthScreen> {
                           height: 8.0,
                         ),
                         CustomButton(text: "Sign Up", onTap: (){
-                            if(_signUpFormKey.currentState!.validate()){
+                            if(_signUpFormKey.currentState!.validate()){ // mane uporer text field gula jodi valid hoy taile validate() function positive feedback dibe
                             signUpUser();
                             }                    
                         })
