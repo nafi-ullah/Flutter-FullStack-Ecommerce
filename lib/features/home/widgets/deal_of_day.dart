@@ -36,38 +36,36 @@ class _DealOfDayState extends State<DealOfDay> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-          children: [
-            Container(
-              alignment: Alignment.topLeft,
-              padding: const EdgeInsets.all(5),
-              child: Text("Deal of the Day"),
-            ),
-            Image.asset(
-              'assets/images/dod.png',
-              height: 200, ),
-            Container(
+    return Column(
+        children: [
+          Container(
+            alignment: Alignment.topLeft,
+            padding: const EdgeInsets.all(5),
+            child: Text("Deal of the Day"),
+          ),
+          Image.asset(
+            'assets/images/dod.png',
+            height: 200, ),
+          Container(
+            padding: const EdgeInsets.only(left: 15),
+            alignment: Alignment.topLeft,
+            child: const Text('\$49.00', style: TextStyle(
+              fontSize: 18,
+            ))
+          ),
+          Container(
               padding: const EdgeInsets.only(left: 15),
               alignment: Alignment.topLeft,
-              child: const Text('\$49.00', style: TextStyle(
-                fontSize: 18,
-              ))
-            ),
-            Container(
-                padding: const EdgeInsets.only(left: 15),
-                alignment: Alignment.topLeft,
-                child: const Text('Raspberry Pi Monitor', style: TextStyle(
-                  fontSize: 14,
-                )),
-            ),
+              child: const Text('Raspberry Pi Monitor', style: TextStyle(
+                fontSize: 14,
+              )),
+          ),
 
 
 
 
 
-          ],
-      ),
+        ],
     );
 
   }

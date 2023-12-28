@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:amazon_clone_app/common/widgets/bottom_bar.dart';
 import 'package:amazon_clone_app/constants/error_handling.dart';
 import 'package:amazon_clone_app/constants/utils.dart';
+import 'package:amazon_clone_app/features/admin/screens/admin_screen.dart';
 import 'package:amazon_clone_app/features/home/screens/home_screen.dart';
 import 'package:amazon_clone_app/provicder/user_provider.dart';
 import 'package:amazon_clone_app/router.dart';
@@ -95,7 +96,11 @@ void signInUser({
           await prefs.setString('x-auth-token', jsonDecode(res.body)['token']); //shared preference a jst token ta thakbe
           Navigator.pushAndRemoveUntil(
             context, 
-            generateRoute(RouteSettings(name: BottomBar.routeName)),
+            generateRoute(
+                Provider.of<UserProvider>(context).user.type == 'user' ?
+                RouteSettings(name: AdminScreen.routeName) :
+                RouteSettings(name: BottomBar.routeName)
+            ),
             //MaterialPageRoute(builder: (context) => HomeScreen()), same as above
             (route) => false)
             ;
