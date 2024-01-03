@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:amazon_clone_app/constants/utils.dart';
+import 'package:amazon_clone_app/features/admin/services/admin_services.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:amazon_clone_app/common/widgets/custom_button.dart';
 import 'package:amazon_clone_app/common/widgets/custom_textfield.dart';
@@ -23,7 +24,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
   final TextEditingController priceController = TextEditingController();
   final TextEditingController quantityController = TextEditingController();
 
-
+  final AdminServices adminServices = AdminServices();
   String category = 'Drone';
   List<File> images = [];
   final _addProductFormKey = GlobalKey<FormState>();
@@ -38,6 +39,12 @@ class _AddProductScreenState extends State<AddProductScreen> {
     quantityController.dispose();
   }
 
+  final List<String> productImage = [
+    "https://www.robosapi.com/assets/images/robot_sensor/sensor1.jpg",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXhFF4yNOBaowQ1BGSY-4NK1oeubVpOSELxZKtmDVZGCdqSYNR-bbj1UbNlq_xUX5xzi8&usqp=CAU",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRf_koZzRMLDLpcpixxyupvY2hEUJzJ_d82zw&usqp=CAU",
+];
+
   List<String> productCategories = [
     'Drone',
     'Robotics',
@@ -45,20 +52,22 @@ class _AddProductScreenState extends State<AddProductScreen> {
     'Amplifier',
     'Tools'
   ];
-
-  // void sellProduct() {
-  //   if (_addProductFormKey.currentState!.validate() && images.isNotEmpty) {
-  //     adminServices.sellProduct(
-  //       context: context,
-  //       name: productNameController.text,
-  //       description: descriptionController.text,
-  //       price: double.parse(priceController.text),
-  //       quantity: double.parse(quantityController.text),
-  //       category: category,
-  //       images: images,
-  //     );
-  //   }
-  // }
+ // when need to pick file from gallery, replace all product image variable to images which takes files.
+  void sellProduct() {
+   // if (_addProductFormKey.currentState!.validate() && productImage.isNotEmpty) {
+      if ( productImage.isNotEmpty) {
+      adminServices.sellProduct(
+        context: context,
+        name: productNameController.text,
+        description: descriptionController.text,
+        price: double.parse(priceController.text),
+        quantity: double.parse(quantityController.text),
+        category: category,
+        images: productImage,
+      );
+    }
+      print("Sell product clicked");
+  }
 
   void selectImages() async {
     var res = await pickImages();
@@ -95,12 +104,12 @@ class _AddProductScreenState extends State<AddProductScreen> {
             child: Column(
               children: [
                 const SizedBox(height: 20),
-                images.isNotEmpty
+                productImage.isNotEmpty
                     ? CarouselSlider(
-                  items: images.map(
+                  items: productImage.map(
                         (i) {
                       return Builder(
-                        builder: (BuildContext context) => Image.file(
+                        builder: (BuildContext context) => Image.network(
                           i,
                           fit: BoxFit.cover,
                           height: 200,
@@ -188,7 +197,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 const SizedBox(height: 10),
                 CustomButton(
                   text: 'Sell',
-                  onTap: (){},
+                  onTap: sellProduct,
                 ),
               ],
             ),

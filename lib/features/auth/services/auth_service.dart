@@ -37,10 +37,10 @@ void signUpUser({
       body: user.toJson(),
       headers: <String, String>{
         'Content-Type' : 'application/json; charset=UTF-8',
-         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
-  "Access-Control-Allow-Credentials": "true", // Required for cookies, authorization headers with HTTPS
-  "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
-  "Access-Control-Allow-Methods": "POST, OPTIONS"
+  //        "Access-Control-Allow-Origin": "*", // Required for CORS support to work
+  // "Access-Control-Allow-Credentials": "true", // Required for cookies, authorization headers with HTTPS
+  // "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
+  // "Access-Control-Allow-Methods": "POST, OPTIONS"
       }
       );
       print(res.body);
@@ -75,9 +75,9 @@ void signInUser({
         'password': password
       }),
       headers: <String, String>{
-        "Access-Control-Allow-Origin": "*",
+        // "Access-Control-Allow-Origin": "*",
         'Content-Type' : 'application/json; charset=UTF-8',
-        'Accept': '*/*'
+        // 'Accept': '*/*'
       }
       );
      
