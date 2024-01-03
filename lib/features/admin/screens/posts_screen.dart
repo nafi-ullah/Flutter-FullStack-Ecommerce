@@ -1,6 +1,9 @@
 
 import 'package:amazon_clone_app/common/widgets/loader.dart';
+import 'package:amazon_clone_app/common/widgets/single_product.dart';
 import 'package:amazon_clone_app/features/admin/screens/add_product_screen.dart';
+import 'package:amazon_clone_app/features/admin/services/admin_services.dart';
+import 'package:amazon_clone_app/models/product.dart';
 import 'package:flutter/material.dart';
 
 class PostsScreen extends StatefulWidget {
@@ -11,19 +14,19 @@ class PostsScreen extends StatefulWidget {
 }
 
 class _PostsScreenState extends State<PostsScreen> {
-  // List<Product>? products;
-  // final AdminServices adminServices = AdminServices();
+   List<Product>? products;
+   final AdminServices adminServices = AdminServices();
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   fetchAllProducts();
-  // }
+  @override
+  void initState() {
+    super.initState();
+    fetchAllProducts();
+  }
   //
-  // fetchAllProducts() async {
-  //   products = await adminServices.fetchAllProducts(context);
-  //   setState(() {});
-  // }
+  fetchAllProducts() async {
+    products = await adminServices.fetchAllProducts(context);
+    setState(() {});
+  }
 
   // void deleteProduct(Product product, int index) {
   //   adminServices.deleteProduct(
@@ -42,27 +45,35 @@ class _PostsScreenState extends State<PostsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return products == null
+        ? const Loader()
+        : Scaffold(
       body: GridView.builder(
-        itemCount: 0,
+        itemCount: products!.length,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2),
         itemBuilder: (context, index) {
+          final productData = products![index];
           return Column(
             children: [
-
+              SizedBox(
+                height: 140,
+                child: SingleProduct(
+                  image: productData.images[0],
+                ),
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  const Expanded(
+                  Expanded(
                     child: Text(
-                      "Nothing",
+                      productData.name,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
                     ),
                   ),
                   IconButton(
-                    onPressed: (){},
+                    onPressed: () {},
                     icon: const Icon(
                       Icons.delete_outline,
                     ),
